@@ -1,6 +1,13 @@
 import { clientMyRoute } from './routes';
+import { fetchClient } from './fetchClient';
+
+const client = fetchClient({
+  getMyRoute: (id: string) => ({ params: { id }, route: clientMyRoute })
+});
 
 export async function runClient() {
-  const a: typeof clientMyRoute['type'] = await fetch('http://localhost:4000' + clientMyRoute.route.replace(':id', '1'), { method: clientMyRoute.method }).then(res => res.json());
-  console.log(a);
+  const a = await client.getMyRoute('1');
+  console.log(a.name3);
+  const b = await client.getMyRoute('2')
+  console.log(b.name3);
 }

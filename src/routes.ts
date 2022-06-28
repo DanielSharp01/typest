@@ -9,7 +9,7 @@ const favouriteMiddleware = Middleware(
 
 const myRoute = Router().get('/items/:id',
   favouriteMiddleware,
-  (_, { id, name }) => ({ id, name, name2: name }));
+  (_, { id, name }) => ({ id, name, name3: name }));
 
 export const clientMyRoute = ClientRoute(myRoute);
 export const expressMW = expressify(myRoute);
