@@ -1,0 +1,20 @@
+{
+  "name": "@typest/client",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@typest/server": "file:../server",
+    "typescript": "^4.7.4"
+  }
+}

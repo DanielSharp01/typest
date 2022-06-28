@@ -1,7 +1,7 @@
-import { expressify } from './typest/expressify';
-import { implement, Unauthorized } from './typest/implement';
-import { routes } from '../shared/routes';
-import { Middleware } from './typest/middleware';
+import { createExpressRouter } from '@typest/express';
+import { implement, Unauthorized } from '@typest/server';
+import { routes } from './shared/routes';
+import { Middleware } from '@typest/server';
 
 const items = [{ id: '1', name: 'Apple', date: new Date() }, { id: '2', name: 'Banana', date: new Date()}]
 
@@ -36,4 +36,4 @@ const routesImp = {
 
 export type routesType = typeof routesImp;
 
-export const expressMW = expressify(routesImp);
+export const expressMW = createExpressRouter(routesImp);

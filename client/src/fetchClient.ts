@@ -1,5 +1,5 @@
-import type { Input } from '../../shared/typest/input';
-import type { ClientRoute } from '../../shared/typest/router';
+import type { Input } from '@typest/server';
+import { ClientRoute } from './clientRoutes';
 
 type ClientInput = Partial<Omit<Input, 'cookies'>>;
 
@@ -10,7 +10,6 @@ type Endpoints = Record<string, Endpoint<any, any>>;
 type EndpointFunctions<T extends Endpoints> = {
   [Prop in keyof T]: (...params: Parameters<T[Prop]>) => Promise<ReturnType<T[Prop]>['route']['type']>
 }
-
 
 function mergeInputs(a: ClientInput, b: ClientInput & { route: ClientRoute<any> }): ClientInput & { route: ClientRoute<any> } {
   return {

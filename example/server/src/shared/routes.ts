@@ -1,5 +1,4 @@
-import { ClientRoutes, Router } from './typest/router'
-import type { routesType } from '../server/routes_impl';
+import { Router } from '@typest/server'
 import { mapDatesFromZString, mapDatesToZString } from './mapDates';
 
 const router = Router();
@@ -12,5 +11,3 @@ export const routes = {
   getItem: router.get('/items/:id'),
   createItem: router.post('/items')
 }
-
-export const clientRoutes = ClientRoutes<routesType>(routes);

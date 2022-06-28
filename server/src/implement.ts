@@ -1,5 +1,5 @@
 import { CombinedMiddleware, Middleware, MiddlewareWithInput } from './middleware';
-import { HttpMethod, Route, Transformation } from '../../shared/typest/router';
+import { HttpMethod, Route, Transformation } from './router';
 
 export type ImplementedRouteDefinition<T extends Middleware<any ,any>> = { method: HttpMethod, route: string, middleware: T, transformation?: Transformation };
 

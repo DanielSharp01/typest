@@ -1,5 +1,8 @@
-import { clientRoutes } from '../shared/routes';
-import { fetchClient } from './typest/fetchClient';
+import { routes } from '../../server/src/shared/routes';
+import type { routesType } from '../../server/src/routes_impl';
+import { ClientRoutes, fetchClient } from '@typest/client'
+
+const clientRoutes = ClientRoutes<routesType>(routes);
 
 const client = fetchClient({
   getItems: () => ({ route: clientRoutes.getItems }),
@@ -7,7 +10,7 @@ const client = fetchClient({
   createItem: (body: { name: string, date: Date }) => ({ body, route: clientRoutes.createItem })
 }, (accessToken: string) => ({ headers: { 'authorization' : `Bearer ${accessToken}` }}));
 
-export async function runClient() {
+async function runClient() {
   client.setClientState('shhhh');
   console.log(await client.endpoints.getItem('1'));
   try {
@@ -15,5 +18,7 @@ export async function runClient() {
     console.log('Created', res);
   } catch (err) {
     console.log('Error', err);
-  }
+  }0
 }
+
+runClient();
