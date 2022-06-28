@@ -1,4 +1,4 @@
-import { Input, Primitive } from './input';
+import { Input, Primitive } from '../../shared/typest/input';
 
 export type MiddlewareWithInput<Previous, Output> = (input: Input, previous: Previous) => Output | Promise<Output>;
 

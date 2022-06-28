@@ -1,9 +1,9 @@
-import { runClient } from './client';
+import { runClient } from '../client/client';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import { expressMW } from './routes';
+import { expressMW } from './routes_impl';
 
 const app = express();
 
