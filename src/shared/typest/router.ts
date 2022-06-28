@@ -10,7 +10,7 @@ export interface Route {
   transformation?: Transformation,
 }
 
-export type ClientRoute<T> = { method: HttpMethod, route: string, fromTransmission?: (value: Primitive) => Primitive, type: T };
+export type ClientRoute<T> = { method: HttpMethod, route: string, transformation?: Transformation, type: T };
 
 export type ClientRoutes<T extends Record<string, ImplementedRouteDefinition<any>>> =
 {
@@ -48,7 +48,7 @@ export function Router() {
 
 export function ClientRoutes<T extends Record<string, ImplementedRouteDefinition<any>>>(routes: Record<string, Route>): ClientRoutes<T> {
   return Object.keys(routes).reduce((acc, key) => {
-    acc[key] = { method: routes[key].method, route: routes[key].route, fromTransmission: routes[key].transformation?.fromTransmission };
+    acc[key] = { method: routes[key].method, route: routes[key].route, transformation: routes[key].transformation };
     return acc;
   }, { } as any) as ClientRoutes<T>;
 }

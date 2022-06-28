@@ -27,7 +27,7 @@ const routesImp = {
   createItem: implement(routes.createItem,
     authMW(true),
     ({ body }: any) => {
-      const created = { id: (items.length + 1).toString(), name: body.name as string, date: new Date() };
+      const created = { id: (items.length + 1).toString(), name: body.name as string, date: body.date as Date };
       items.push(created);
       return created;
     }

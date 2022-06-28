@@ -32,6 +32,9 @@ export function fetchClient<T extends Endpoints, S>(endpoints: T, stateMapper?: 
   for (const key in endpoints) {
     fetchEndpoints[key] = (...params: any[]) => {
       const inputs = mergeInputs(stateInputs, endpoints[key](...params));
+      const fromTransmission = inputs.route.transformation?.fromTransmission ?? ((x: any) => x);
+      const toTransmission = inputs.route.transformation?.toTransmission ?? ((x: any) => x);
+
       let url = `http://localhost:4000${inputs.route.route}`;
       
       for (const pkey in inputs.params) {
@@ -52,11 +55,10 @@ export function fetchClient<T extends Endpoints, S>(endpoints: T, stateMapper?: 
         url += `?${queryString}`;
       }
 
-      const fromTransmission = inputs.route.fromTransmission ?? ((x: any) => x);
       return fetch(url,
       {
         method: inputs.route.method,
-        body: inputs.body ? JSON.stringify(inputs.body) : undefined,
+        body: inputs.body ? JSON.stringify(toTransmission(inputs.body)) : undefined,
         headers: { ...inputs.headers, 'Content-Type': 'application/json' }
       }).catch(() => { throw { error: 'Network error' }; }).then(async res => {
         if (!res.ok) {

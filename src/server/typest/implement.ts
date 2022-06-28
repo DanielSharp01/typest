@@ -1,7 +1,7 @@
 import { CombinedMiddleware, Middleware, MiddlewareWithInput } from './middleware';
-import { HttpMethod, Route } from '../../shared/typest/router';
+import { HttpMethod, Route, Transformation } from '../../shared/typest/router';
 
-export type ImplementedRouteDefinition<T extends Middleware<any ,any>> = { method: HttpMethod, route: string, middleware: T, toTransmission?: (value: any) => any };
+export type ImplementedRouteDefinition<T extends Middleware<any ,any>> = { method: HttpMethod, route: string, middleware: T, transformation?: Transformation };
 
 export function implement<A, B, C, D, E, F, G, H, I, J>(route: Route, m1: MiddlewareWithInput<never, A>,
   m2?: MiddlewareWithInput<A, B>,
@@ -14,7 +14,7 @@ export function implement<A, B, C, D, E, F, G, H, I, J>(route: Route, m1: Middle
   m9?: MiddlewareWithInput<H, I>,
   m10?: MiddlewareWithInput<I, J>
 ): ImplementedRouteDefinition<CombinedMiddleware<A, B, C, D, E, F, G, H, I, J>> {
-  return { ...route, middleware: Middleware(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10), toTransmission: route.transformation?.toTransmission };
+  return { ...route, middleware: Middleware(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10) };
 }
 
 export function Ok<T>(res: T): T {

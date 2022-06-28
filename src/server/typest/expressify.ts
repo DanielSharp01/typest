@@ -5,13 +5,14 @@ export function expressify(routeDefinitions: Record<string, ImplementedRouteDefi
   const router = Router();
   for (const definition of Object.values(routeDefinitions)) {
     (router as any)[definition.method.toLowerCase()](definition.route, async (req: any, res: any, next: any) => {
-      const response = await definition.middleware({ cookies: req.cookies, query: req.query, body: req.body, headers: req.headers, params: req.params }).catch((res: any) => {
+      const fromTransmission = definition.transformation?.fromTransmission ?? ((x: any) => x);
+      const toTransmission = definition.transformation?.toTransmission ?? ((x: any) => x);
+      const response = await definition.middleware({ cookies: req.cookies, query: req.query, body: fromTransmission(req.body), headers: req.headers, params: req.params }).catch((res: any) => {
         if (res.__statusCode) return res;
         else return InternalError(res);
       });
       if (response.__statusCode) res.status(response.__statusCode);
       delete response.__statusCode;
-      const toTransmission = definition.toTransmission ?? ((x: any) => x);
       res.send(toTransmission(response));
     })
   }
